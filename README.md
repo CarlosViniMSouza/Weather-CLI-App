@@ -1,6 +1,6 @@
 ![logoRealPython](https://raw.githubusercontent.com/CarlosViniMSouza/Article-Prettify_DataStructure/master/translation/images/logo_RealPython.webp)
 
-![logoArticle](https://robocrop.realpython.net/?url=https%3A//files.realpython.com/media/Build-a-Weather-App_Watermarked.4abcf2b7639f.jpg&w=960&sig=705d7fad9eed67f91d605261ee709fcb46c4f60d)
+![logoArticle](https://files.realpython.com/media/Build-a-Weather-App_Watermarked.4abcf2b7639f.jpg)
 
 # Raining Outside? Build a Weather CLI App With Python
 
