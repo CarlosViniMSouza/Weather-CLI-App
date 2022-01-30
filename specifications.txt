@@ -1,0 +1,27 @@
+## Especificacoes:
+
+# O aplicativo meteorologico que voce construirs neste tutorial ira:
+
+# ° Pegue um nome de cidade como entrada necessaria
+# ° Pegue um sinalizador opcional para exibir a saida em Fahrenheit em vez de Celsius, se desejado
+# ° Chame uma API meteorologica online para buscar os dados meteorologicos
+# ° Exibe o nome da cidade, as condicoes climaticas atuais e a temperatura atual
+# ° Formate a saida visualmente usando cores, espacamento e emojis
+
+### Com essas notas rapidas, voce tem um plano aproximado do que construira e definiu o escopo do que o aplicativo podera fazer.
+
+### NOTA: Se voce tiver recursos diferentes ou adicionais em mente, mantenha suas anotacoes e implemente-as em seu aplicativo de clima assim que terminar de criar esta versao inicial.
+
+## Pre-Requisitos:
+
+### Para concluir este tutorial, voce deve estar familiarizado com os seguintes conceitos:
+
+# ° Construindo interfaces de linha de comando usando argparse
+# ° Lendo dados publicos da Internet com APIs
+# ° Integrando APIs no codigo Python
+# ° Trabalhando com dados JSON
+# ° Importando modulos e bibliotecas
+# ° Definindo suas proprias funcoes
+# ° Manipulando erros com excecoes do Python
+# ° Formatando seu texto usando f-strings
+# ° Usando expressoes condicionais

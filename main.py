@@ -1,16 +1,26 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from configparser import ConfigParser
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+def _get_api_key():
+    config = ConfigParser()
+    config.read("secrets.ini")
+    key = config["openweather"]["api_key"]
+    return key
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+_get_api_key()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+"""
+° A linha 3 importa o ConfigParser do módulo configparser do Python.
+
+° A linha 5 define _get_api_key(), iniciando o nome com um caractere sublinhado (_). 
+  Essa convenção de nomenclatura indica que a função deve ser considerada não pública.
+
+° As linhas 6 a 12 compõem uma docstring para a função.
+
+° A linha 13 instancia um objeto ConfigParser que você nomeou config.
+
+° A linha 14 usa .read() para carregar as informações que você salvou em secrets.ini em seu script Python.
+
+° A linha 15 retorna o valor de sua chave de API acessando o valor do dicionário usando a notação de colchetes.
+"""
