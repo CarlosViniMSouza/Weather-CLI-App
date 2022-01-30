@@ -139,4 +139,4 @@ dmypy.json
 cython_debug/
 
 # file project with API key
-secrets.ini
+env/secrets.ini
