@@ -137,6 +137,3 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
-
-# file project with API key
-env/secrets.ini

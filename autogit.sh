@@ -1,4 +1,4 @@
 git add -A
-git commit -m "secrets.ini -> moved to env folder"
+git commit -m "Step3 -> add"
 git push -u origin master
 git status
