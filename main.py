@@ -87,6 +87,18 @@ def get_data(query_url):
         sys.exit("Ineligible answer!")
 
 
+def display_info(weather_data, imperial=False):
+    city = weather_data["name"]
+
+    weather_description = weather_data["weather"][0]["description"]
+
+    temperature = weather_data["main"]["temp"]
+
+    print(f"{city}", end="")
+    print(f"\t{weather_description.capitalize()}", end=" ")
+    print(f"({temperature}°{'F' if imperial else 'C'})")
+
+
 """
 Nota: Com essas adições, você tornou seu aplicativo de previsão do tempo Python mais fácil de usar para desenvolvedores e não desenvolvedores!
 """
@@ -96,8 +108,4 @@ if __name__ == "__main__":
     user_args = read_user_cli_args()
     query_url = build_query(user_args.city, user_args.imperial)
     weather_data = get_data(query_url)
-    print(
-        f"{weather_data['name']}: "
-        f"{weather_data['weather'][0]['description']} "
-        f"({weather_data['main']['temp']})"
-    )
+    display_info(weather_data, user_args.imperial)
