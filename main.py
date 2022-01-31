@@ -1,6 +1,11 @@
 from configparser import ConfigParser
+from urllib import parse
 import argparse
 import env
+
+
+# A linha de código abaixo fará todas as chamadas de API constantemente
+URL = "http://api.openweathermap.org/data/2.5/weather"
 
 
 def _get_api_key():
@@ -9,22 +14,6 @@ def _get_api_key():
     config.read("secrets.ini")
 
     return config["openweather"]["api_key"]
-
-
-"""
-° A linha 3 importa o ConfigParser do módulo configparser do Python.
-
-° A linha 5 define _get_api_key(), iniciando o nome com um caractere sublinhado (_). 
-  Essa convenção de nomenclatura indica que a função deve ser considerada não pública.
-
-° As linhas 6 a 12 compõem uma docstring para a função.
-
-° A linha 13 instancia um objeto ConfigParser que você nomeou config.
-
-° A linha 14 usa .read() para carregar as informações que você salvou em secrets.ini em seu script Python.
-
-° A linha 15 retorna o valor de sua chave de API acessando o valor do dicionário usando a notação de colchetes.
-"""
 
 
 def read_user_cli_args():
@@ -38,17 +27,6 @@ def read_user_cli_args():
 
 
 """
-° As linhas 12 a 14 criam uma instância de argparse.ArgumentParser, para a qual você passa uma descrição opcional do analisador na linha 13.
-
-° A linha 15 retorna os resultados de uma chamada para .parse_args(), que eventualmente serão os valores de entrada do usuário.
-
-° A linha 19 abre um bloco condicional após verificar o namespace "__main__" do Python,
-que permite definir o código que deve ser executado quando você estiver executando weather.py como um script.
-
-° A linha 20 chama read_user_cli_args(), executando efetivamente a lógica de código de análise da CLI que você escreveu mais adiante.
-"""
-
-"""
 Teste no terminal a aplicação, irá aparecer a seguinte mensagem de erro:
 
 usage: weather.py [-h]
@@ -58,20 +36,33 @@ O Python primeiro imprime informações de uso em seu console. Essas informaçõ
 Em seguida, ele informa que seu analisador não reconheceu o argumento que você passou para o programa usando sua CLI.
 """
 
-"""
-° As linhas 15 a 17 definem o argumento "city" que receberá uma ou várias entradas separadas por espaços em branco. 
-Ao definir o número de argumentos (nargs) como "+", você permite que os usuários passem nomes de cidades compostos 
-por mais de uma palavra, como Nova York.
-
-° As linhas 18 a 23 definem o argumento booleano opcional imperial. Você define o argumento da palavra-chave de ação como 
-"store_true", o que significa que o valor para imperial será True se os usuários adicionarem o sinalizador opcional e False se não o fizerem.
-"""
 
 """
 No entanto, se você executar o script e passar um nome de cidade como entrada, ainda não poderá ver nenhuma saída exibida de volta ao seu console. 
 Volte para weather.py e edite o código em seu bloco de código condicional na parte inferior do arquivo:
 """
 
+
+def build_query(city_input, imperial=False):
+    api_key = _get_api_key()
+    city_name = " ".join(city_input)
+    url_encoded_city_name = parse.quote_plus(city_name)
+    units = "imperial" if imperial else "metric"
+
+    url = (
+        f"{URL}?q={url_encoded_city_name}"
+        f"&units={units}&appid={api_key}"
+    )
+
+    return url
+
+"""
+Você começou adicionando uma nova instrução de importação na linha 5. Você usará uma função do módulo urllib.parse
+na linha 24 para ajudar a limpar a entrada do usuário para que a API possa consumi-la com segurança.
+"""
+
+
 if __name__ == "__main__":
     user_args = read_user_cli_args()
-    print(user_args.city, user_args.imperial)
+    query_url = build_query(user_args.city, user_args.imperial)
+    print(query_url)
