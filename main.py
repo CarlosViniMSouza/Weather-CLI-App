@@ -2,18 +2,13 @@ from urllib import error, parse, request
 from configparser import ConfigParser
 from pprint import pp
 import argparse
+import style
 import json
 import sys
 
 
 # A linha de código abaixo fará todas as chamadas de API constantemente
 URL = "http://api.openweathermap.org/data/2.5/weather"
-
-PAD = 20
-
-REVERSE = ["\033[;42m", "\033[;45m", "\033[;33m"]
-
-RESET = "\033[0m"
 
 
 def _get_api_key():
@@ -100,13 +95,25 @@ def display_info(weather_data, imperial=False):
 
     temperature = weather_data["main"]["temp"]
 
-    print(f"{REVERSE[0]}{city:^{PAD}}{RESET}", end="")
-    print(f"\t{REVERSE[1]}{weather_description.capitalize():^{PAD}}{RESET}", end=" ")
-    print(f"{REVERSE[2]}({temperature}°{'F' if imperial else 'C'}){RESET}")
+    style.change_color(style.REVERSE)
+    print(f"{city:^{style.PADDING}}", end="")
+    style.change_color(style.RESET)
+
+    style.change_color(style.RED)
+    print(f"\t{weather_description.capitalize():^{style.PADDING}}", end=" ")
+    style.change_color(style.RESET)
+
+    print(f"({temperature}°{'F' if imperial else 'C'})")
 
 
 """
-Nota: Com essas adições, você tornou seu aplicativo de previsão do tempo Python mais fácil de usar para desenvolvedores e não desenvolvedores!
+Com esta atualização, você adicionou um emoji a cada ID de clima 
+e resumiu os dois parâmetros de exibição em uma tupla.
+"""
+
+"""
+Nota: Com essas adições, você tornou seu aplicativo de previsão do tempo Python 
+mais fácil de usar para desenvolvedores e não desenvolvedores!
 """
 
 
