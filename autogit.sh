@@ -1,4 +1,4 @@
 git add -A
-git commit -m "Next Topic: Format Weather Types in Different Colors | style.py -> add"
+git commit -m "Project -> finished"
 git push -u origin master
 git status

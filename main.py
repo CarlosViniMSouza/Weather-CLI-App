@@ -11,6 +11,20 @@ import sys
 URL = "http://api.openweathermap.org/data/2.5/weather"
 
 
+"""
+Semelhante aos códigos de resposta HTTP, a API de clima fornece um código de condição climática com cada resposta. 
+Esse código categoriza as condições climáticas em grupos definidos por um intervalo de números de identificação.
+"""
+
+THUNDERSTORM = range(200, 300)
+DRIZZLE = range(300, 400)
+RAIN = range(500, 600)
+SNOW = range(600, 700)
+ATMOSPHERE = range(700, 800)
+CLEAR = range(800, 801)
+CLOUDY = range(801, 900)
+
+
 def _get_api_key():
     config = ConfigParser()
 
@@ -91,6 +105,8 @@ def get_data(query_url):
 def display_info(weather_data, imperial=False):
     city = weather_data["name"]
 
+    weather_id = weather_data["weather"][0]["id"]
+
     weather_description = weather_data["weather"][0]["description"]
 
     temperature = weather_data["main"]["temp"]
@@ -99,11 +115,34 @@ def display_info(weather_data, imperial=False):
     print(f"{city:^{style.PADDING}}", end="")
     style.change_color(style.RESET)
 
-    style.change_color(style.RED)
-    print(f"\t{weather_description.capitalize():^{style.PADDING}}", end=" ")
+    weather_symbol, color = _select_weather_display_params(weather_id)
+
+    style.change_color(color)
+    print(f"\t{weather_symbol}", end=" ")
+    print(f"{weather_description.capitalize():^{style.PADDING}}", end=" ")
     style.change_color(style.RESET)
 
     print(f"({temperature}°{'F' if imperial else 'C'})")
+
+
+def _select_weather_display_params(weather_id):
+    if weather_id in THUNDERSTORM:
+        display_params = ("💥", style.RED)
+    elif weather_id in DRIZZLE:
+        display_params = ("💧", style.CYAN)
+    elif weather_id in RAIN:
+        display_params = ("💦", style.BLUE)
+    elif weather_id in SNOW:
+        display_params = ("⛄️", style.WHITE)
+    elif weather_id in ATMOSPHERE:
+        display_params = ("🌀", style.BLUE)
+    elif weather_id in CLEAR:
+        display_params = ("🔆", style.YELLOW)
+    elif weather_id in CLOUDY:
+        display_params = ("💨", style.WHITE)
+    else:  # In case the API adds new weather codes
+        display_params = ("🌈", style.RESET)
+    return display_params
 
 
 """
@@ -122,3 +161,9 @@ if __name__ == "__main__":
     query_url = build_query(user_args.city, user_args.imperial)
     weather_data = get_data(query_url)
     display_info(weather_data, user_args.imperial)
+
+"""
+Com esta última alteração configurada em seu aplicativo de clima Python, você terminou de criar sua ferramenta CLI. 
+Agora você pode acessar seu mecanismo de busca favorito, procurar alguns nomes divertidos de cidades e passar o resto deste dia chuvoso 
+procurando um lugar onde você possa sonhar em passar suas próximas férias.
+"""
