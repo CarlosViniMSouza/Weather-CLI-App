@@ -1,5 +1,6 @@
-from configparser import ConfigParser
 from urllib import error, parse, request
+from configparser import ConfigParser
+from pprint import pp
 import argparse
 import json
 import sys
@@ -95,4 +96,8 @@ if __name__ == "__main__":
     user_args = read_user_cli_args()
     query_url = build_query(user_args.city, user_args.imperial)
     weather_data = get_data(query_url)
-    print(weather_data)
+    print(
+        f"{weather_data['name']}: "
+        f"{weather_data['weather'][0]['description']} "
+        f"({weather_data['main']['temp']})"
+    )
