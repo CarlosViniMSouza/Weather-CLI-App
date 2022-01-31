@@ -1,7 +1,8 @@
 from configparser import ConfigParser
-from urllib import parse, request
+from urllib import error, parse, request
 import argparse
 import json
+import sys
 
 
 # A linha de código abaixo fará todas as chamadas de API constantemente
@@ -67,11 +68,27 @@ na linha 24 para ajudar a limpar a entrada do usuário para que a API possa cons
 
 
 def get_data(query_url):
-    response = request.urlopen(query_url)
+    try:
+        response = request.urlopen(query_url)
+    except error.HTTPError as http_error:
+        if http_error.code == 401:
+            sys.exit("ACCESS DENIED!")
+        elif http_error.code == 404:
+            sys.exit("Weather Data Inexist!")
+        else:
+            sys.exit(f"Something went strange ... ({http_error.code})")
 
     data = response.read()
 
-    return json.loads(data)
+    try:
+        return json.loads(data)
+    except json.JSONDecodeError:
+        sys.exit("Ineligible answer!")
+
+
+"""
+Nota: Com essas adições, você tornou seu aplicativo de previsão do tempo Python mais fácil de usar para desenvolvedores e não desenvolvedores!
+"""
 
 
 if __name__ == "__main__":
