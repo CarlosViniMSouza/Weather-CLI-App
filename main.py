@@ -9,6 +9,8 @@ import sys
 # A linha de código abaixo fará todas as chamadas de API constantemente
 URL = "http://api.openweathermap.org/data/2.5/weather"
 
+PAD = 20
+
 
 def _get_api_key():
     config = ConfigParser()
@@ -94,8 +96,8 @@ def display_info(weather_data, imperial=False):
 
     temperature = weather_data["main"]["temp"]
 
-    print(f"{city}", end="")
-    print(f"\t{weather_description.capitalize()}", end=" ")
+    print(f"{city:^{PAD}}", end="")
+    print(f"\t{weather_description.capitalize():^{PAD}}", end=" ")
     print(f"({temperature}°{'F' if imperial else 'C'})")
 
 
