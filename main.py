@@ -11,6 +11,10 @@ URL = "http://api.openweathermap.org/data/2.5/weather"
 
 PAD = 20
 
+REVERSE = ["\033[;42m", "\033[;45m", "\033[;33m"]
+
+RESET = "\033[0m"
+
 
 def _get_api_key():
     config = ConfigParser()
@@ -96,9 +100,9 @@ def display_info(weather_data, imperial=False):
 
     temperature = weather_data["main"]["temp"]
 
-    print(f"{city:^{PAD}}", end="")
-    print(f"\t{weather_description.capitalize():^{PAD}}", end=" ")
-    print(f"({temperature}°{'F' if imperial else 'C'})")
+    print(f"{REVERSE[0]}{city:^{PAD}}{RESET}", end="")
+    print(f"\t{REVERSE[1]}{weather_description.capitalize():^{PAD}}{RESET}", end=" ")
+    print(f"{REVERSE[2]}({temperature}°{'F' if imperial else 'C'}){RESET}")
 
 
 """
