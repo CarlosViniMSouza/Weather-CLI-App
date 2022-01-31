@@ -1,7 +1,7 @@
 from configparser import ConfigParser
-from urllib import parse
+from urllib import parse, request
 import argparse
-import env
+import json
 
 
 # A linha de código abaixo fará todas as chamadas de API constantemente
@@ -45,8 +45,11 @@ Volte para weather.py e edite o código em seu bloco de código condicional na p
 
 def build_query(city_input, imperial=False):
     api_key = _get_api_key()
+
     city_name = " ".join(city_input)
+
     url_encoded_city_name = parse.quote_plus(city_name)
+
     units = "imperial" if imperial else "metric"
 
     url = (
@@ -56,13 +59,23 @@ def build_query(city_input, imperial=False):
 
     return url
 
+
 """
 Você começou adicionando uma nova instrução de importação na linha 5. Você usará uma função do módulo urllib.parse
 na linha 24 para ajudar a limpar a entrada do usuário para que a API possa consumi-la com segurança.
 """
 
 
+def get_data(query_url):
+    response = request.urlopen(query_url)
+
+    data = response.read()
+
+    return json.loads(data)
+
+
 if __name__ == "__main__":
     user_args = read_user_cli_args()
     query_url = build_query(user_args.city, user_args.imperial)
-    print(query_url)
+    weather_data = get_data(query_url)
+    print(weather_data)
